@@ -41,11 +41,17 @@
 
 #include <target/arch.h>
 #include <target/noc.h>
+#include <target/clk.h>
 
 void spacemit_n100_d2d_init(void)
 {
+	cmn600_cml_init();
 }
 
 void spacemit_n100_init(void)
 {
+	cmn600_initialized = false;
+	clk_enable(mesh_sub_rstn);
+	clk_enable(peri_sub_rstn);
+	cmn600_init();
 }

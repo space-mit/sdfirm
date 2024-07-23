@@ -42,14 +42,37 @@
 #ifndef __NOC_SPACEMIT_N100_H_INCLUDE__
 #define __NOC_SPACEMIT_N100_H_INCLUDE__
 
+#define CMN_PERIPH_BASE		N100_HW_BASE
+#define CMN_MAX_NODES		N100_HW_NODES
+#define CMN_MESH_DIMEN_X	N100_HW_COLS
+#define CMN_MESH_DIMEN_Y	N100_HW_ROWS
+#define CMN_HND_NID		0
+
+#include <driver/cmn600.h>
+
 #ifdef CONFIG_N100_CCIX
-#define spacemit_n100_chip_id()		n100_hw_chip_id()
-#define spacemit_n100_chip_base()	n100_hw_chip_base()
+#define cmn600_hw_chip_id()	n100_hw_chip_id()
+#define cmn600_hw_chip_base()	n100_hw_chip_base()
 #else
-#define spacemit_n100_chip_id()		0
-#define spacemit_n100_chip_base()	0
+#define cmn600_hw_chip_id()	0
+#define cmn600_hw_chip_base()	0
 #endif
 #ifdef CONFIG_N100
+extern cmn_id_t cmn_snf_count;
+extern cmn_nid_t cmn_snf_table[];
+extern cmn_id_t cmn_mmap_count;
+extern struct cmn600_memregion cmn_mmap_table[];
+extern cmn_id_t cmn_sa_count;
+
+extern cmn_id_t cml_link_id;
+extern cmn_id_t cml_rnf_count_remote;
+extern uint8_t cml_pcie_bus_num;
+extern uint8_t cml_pcie_tlp_tc;
+
+extern struct cmn600_ccix_ha_mmap cml_ha_mmap_table_remote[];
+extern cmn_id_t cml_ha_mmap_count_remote;
+extern cmn_nid_t cml_ha_nid_local;
+
 void spacemit_n100_init(void);
 void spacemit_n100_d2d_init(void);
 #else
